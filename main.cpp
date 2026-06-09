@@ -54,7 +54,7 @@ int algorytmDynamiczny(const vector<Rzecz>& rzeczy, int n, int b, bool trybDemo)
     }
 
     auto stop = high_resolution_clock::now();
-    auto czasTrwania = duration_cast<microseconds>(stop - start);
+    auto czasTrwania = duration_cast<nanoseconds>(stop - start);
 
     int uzytecznosc = plecak[n][b];
     int pozostale_miejsce = b;
@@ -74,27 +74,34 @@ int algorytmDynamiczny(const vector<Rzecz>& rzeczy, int n, int b, bool trybDemo)
     cout << endl;
     cout << "algorytm programowania dynamicznego";
     cout << endl;
-    cout << "Czas obliczen: " << czasTrwania.count() << " mikrosekund\n";
+    cout << "Czas obliczen: " << czasTrwania.count() << " nanosekund\n";
     cout << "laczna uzytecznosc/wartosc: " << plecak[n][b] << "\n";
     cout << "Sumaryczny rozmiar zestawu: " << zajete_miejsce << " / " << b << "\n";
     cout << "Identyfikatory elementow: ";
-    if (wybraneID.empty()) cout << "Brak (nic się nie zmieściło)";
+    if (wybraneID.empty()) cout << "Brak (nic sie nie zmiescilo)";
     else {
         for (int id : wybraneID) cout << id << " ";
     }
     cout << "\n";
 
     if (trybDemo) {
-        cout << "tabela" << endl;
+        cout << "tabela (i - przedmiot, w - waga)" << endl;
+        cout << setw(5) << "i\\w |"; 
+        for (int j = 0; j <= b; ++j) {
+            cout << setw(4) << j << " ";
+        }
+        cout << "\n";
+        cout << string(6 + (b + 1) * 5, '-') << "\n";
         for (int i = 0; i <= n; ++i) {
+            cout << setw(3) << i << " |"; 
+            
             for (int j = 0; j <= b; ++j) {
                 cout << setw(4) << plecak[i][j] << " ";
             }
             cout << "\n";
         }
-
         cout << "\nsygnatury:\n";
-        if (sygnatury.empty()) cout << "Brak podproblemów o wielokrotnym rozwiązaniu.\n";
+        if (sygnatury.empty()) cout << "Brak sygnatur\n";
         else {
             for (const auto& sig : sygnatury) {
                 cout << sig.first << "-" << sig.second << " " << endl;
@@ -135,14 +142,14 @@ int algorytmZachlanny(vector<Rzecz> rzeczy, int n, int b, bool trybDemo) {
     }
 
     auto stop = high_resolution_clock::now();
-    auto czasTrwania = duration_cast<microseconds>(stop - start);
+    auto czasTrwania = duration_cast<nanoseconds>(stop - start);
 
     sort(wybraneID.begin(), wybraneID.end());
 
     cout << endl;
     cout << "algorytm zachlanny" << endl;
     cout << endl;
-    cout << "Czas obliczen: " << czasTrwania.count() << " mikrosekund\n";
+    cout << "Czas obliczen: " << czasTrwania.count() << " nanosekund\n";
     cout << "laczna uzytecznosc/wartosc: " << laczna_uzytecznosc << "\n";
     cout << "Sumaryczny rozmiar zestawu: " << zajete_miejsce << " / " << b << "\n";
     cout << "Identyfikatory elementow: ";
@@ -209,12 +216,12 @@ int algorytmSilowy(const vector<Rzecz>& rzeczy, int n, int b, bool trybDemo) {
     }
 
     auto stop = high_resolution_clock::now();
-    auto czas_obliczen = duration_cast<microseconds>(stop - start).count();
+    auto czas_obliczen = duration_cast<nanoseconds>(stop - start).count();
 
     cout << endl;
     cout << "algorytm silowy" << endl;
     cout << endl;
-    cout << "Czas obliczen: " << czas_obliczen << " mikrosekund\n";
+    cout << "Czas obliczen: " << czas_obliczen << " nanosekund\n";
     cout << "laczna uzytycznosc/wartosc: " << max_uzytecznosc << "\n";
     cout << "Sumaryczny rozmiar zestawu: " << suma_rozmiaru << " / " << b << "\n";
     cout << "Identyfikatory elementow: ";
@@ -239,7 +246,6 @@ int main() {
     int n = 0, b = 0;
     vector<Rzecz> rzeczy;
 
-    cout << "=== SYSTEM CONFIGURATION EXPEDITION ===\n";
     cout << "Wybierz tryb wprowadzania danych:\n";
     cout << "1. Wczytaj dane z pliku tekstowego\n";
     cout << "2. Wygeneruj dane losowo\n";
