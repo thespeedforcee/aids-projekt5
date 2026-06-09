@@ -209,7 +209,7 @@ int algorytmSilowy(const vector<Rzecz>& rzeczy, int n, int b, bool trybDemo) {
                 }
             } 
             // jesli remis bo zestaw o takim samym wyniku
-            else if (aktualna_uzytecznosc == max_uzytecznosc && max_uzytecznosc > 0) {
+            else if (aktualna_uzytecznosc == max_uzytecznosc) { //wtedy uwzgledni tez przypadek gdy plecak jest pusty co tez jest rozwiazaniem i wtedy liczba opt = 1
                 liczba_optymalnych++;
             }
         }
